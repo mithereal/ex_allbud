@@ -19,9 +19,10 @@ defmodule Allbud do
 
     strains =
       Enum.map(letters, fn x ->
-       {:ok,strain} = fetch_strains_by_letter(x)
-       strain
-      end) |> List.flatten()
+        {:ok, strain} = fetch_strains_by_letter(x)
+        strain
+      end)
+      |> List.flatten()
 
     Enum.map(strains, fn x ->
       fetch_strain_profile(x)
