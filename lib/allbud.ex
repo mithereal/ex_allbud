@@ -93,6 +93,7 @@ defmodule Allbud do
   ```
   """
   def fetch_strain_profile(params) do
+    {name, _url} = params
     {status, response} = Http.fetch_strain_profile(params)
 
     case(status) do
@@ -177,6 +178,7 @@ defmodule Allbud do
 
         reply = %{
           description: description,
+          name: String.trim(name),
           variety: String.trim(variety),
           strain_percentages: String.trim(strain_percentages),
           moods: moods,
