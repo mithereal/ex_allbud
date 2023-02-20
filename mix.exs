@@ -12,7 +12,7 @@ defmodule Allbud.MixProject do
       source_url: "https://github.com/mithereal/ex_allbud",
       description: "Scrape all strain information from allbud.com",
       docs: docs(),
-      package: package(),
+      package: package()
     ]
   end
 

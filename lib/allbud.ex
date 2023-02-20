@@ -15,9 +15,9 @@ defmodule Allbud do
   ```
   """
   def all() do
-    letters = for n <- ?a..?z, do: n
+    letters = Enum.map(?a..?z, fn x -> <<x::utf8>> end)
 
-    strains =
+    {:ok, strains} =
       Enum.map(letters, fn x ->
         fetch_strains_by_letter(x)
       end)
@@ -37,7 +37,7 @@ defmodule Allbud do
   ```
   """
   def fetch_strains() do
-    letters = for n <- ?a..?z, do: n
+    letters = Enum.map(?a..?z, fn x -> <<x::utf8>> end)
 
     Enum.map(letters, fn x ->
       fetch_strains_by_letter(x)
