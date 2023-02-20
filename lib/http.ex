@@ -14,7 +14,7 @@ defmodule Allbud.Http do
     get(@search_url <> String.upcase(params) <> "&results=#{results}")
   end
 
-  def fetch_strain_profile({name, url} = params) do
+  def fetch_strain_profile({name, url} = _params) do
     Logger.info("Fetching strain profile: " <> name)
     get("#{url}")
   end
