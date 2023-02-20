@@ -17,10 +17,11 @@ defmodule Allbud do
   def all() do
     letters = Enum.map(?a..?z, fn x -> <<x::utf8>> end)
 
-    {:ok, strains} =
+    strains =
       Enum.map(letters, fn x ->
-        fetch_strains_by_letter(x)
-      end)
+       {:ok,strain} = fetch_strains_by_letter(x)
+       strain
+      end) |> List.flatten()
 
     Enum.map(strains, fn x ->
       fetch_strain_profile(x)
