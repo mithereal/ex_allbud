@@ -7,7 +7,12 @@ defmodule Allbud.MixProject do
       version: "0.1.0",
       elixir: "~> 1.14",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      name: "Allbud Strain Scraper",
+      source_url: "https://github.com/mithereal/ex_allbud",
+      description: "Scrape all strain information from allbud.com",
+      docs: docs(),
+      package: package(),
     ]
   end
 
@@ -27,5 +32,16 @@ defmodule Allbud.MixProject do
       {:tesla, "~> 1.4"},
       {:hackney, "~> 1.17"}
     ]
+  end
+
+  defp package do
+    [
+      licenses: ["MIT"],
+      links: %{"GitHub" => "https://github.com/mithereal/ex_allbud"}
+    ]
+  end
+
+  defp docs do
+    []
   end
 end

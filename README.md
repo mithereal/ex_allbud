@@ -1,6 +1,6 @@
 # Allbud
 
-**TODO: Add description**
+**Allbud Strain Scraper**
 
 ## Installation
 
@@ -14,6 +14,13 @@ def deps do
   ]
 end
 ```
+
+Example:
+
+  ```elixir
+  iex> Allbud.all()
+   []
+  ```
 
 Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
