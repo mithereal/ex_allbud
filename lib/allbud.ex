@@ -42,7 +42,8 @@ defmodule Allbud do
     letters = Enum.map(?a..?z, fn x -> <<x::utf8>> end)
 
     Enum.map(letters, fn x ->
-      fetch_strains_by_letter(x)
+      {:ok, strain} = fetch_strains_by_letter(x)
+      strain
     end)
   end
 
