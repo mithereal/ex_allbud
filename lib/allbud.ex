@@ -5,6 +5,8 @@ defmodule Allbud do
 
   alias Allbud.Http
 
+  @letters Enum.map(?a..?z, fn x -> <<x::utf8>> end)
+
   @doc """
   Fetch all strains and strain profiles.
 
@@ -15,10 +17,8 @@ defmodule Allbud do
   ```
   """
   def all() do
-    letters = Enum.map(?a..?z, fn x -> <<x::utf8>> end)
-
     strains =
-      Enum.map(letters, fn x ->
+      Enum.map(@letters, fn x ->
         {:ok, strain} = fetch_strains_by_letter(x)
         strain
       end)
@@ -39,9 +39,7 @@ defmodule Allbud do
   ```
   """
   def fetch_strains() do
-    letters = Enum.map(?a..?z, fn x -> <<x::utf8>> end)
-
-    Enum.map(letters, fn x ->
+    Enum.map(@letters, fn x ->
       {:ok, strain} = fetch_strains_by_letter(x)
       strain
     end)
@@ -113,6 +111,33 @@ defmodule Allbud do
             _ -> ""
           end
 
+        thc =
+          case Floki.find(result, "h4.percentage") do
+            [{_, _, [thc]}] ->
+              {thc, "0%"}
+
+            [
+              {"h4", [{"class", "percentage"}],
+               [{"span", [{"class", "heading"}], ["THC: "]}, thc]}
+            ] ->
+              {thc, "0%"}
+
+            [
+              {"h4", [{"class", "percentage"}],
+               [
+                 {"span", [{"class", "heading"}], ["THC: "]},
+                 thc,
+                 {"span", [{"class", "heading"}], ["CBN: "]},
+                 {"em", [], [cbn]},
+                 pct
+               ]}
+            ] ->
+              {thc, cbn <> pct}
+
+            _ ->
+              {"0%", "0%"}
+          end
+
         [{_, _, [variety]}] =
           Floki.find(result, "h4.variety")
           |> Floki.find("a")
@@ -176,10 +201,14 @@ defmodule Allbud do
             name
           end)
 
+        {thc, cbn} = thc
+
         reply = %{
           description: description,
           name: String.trim(name),
           variety: String.trim(variety),
+          thc: String.replace(thc, "\n", "") |> String.replace(~r/\s+/, " ") |> String.trim(),
+          cbn: String.replace(cbn, "\n", "") |> String.replace(~r/\s+/, " ") |> String.trim(),
           strain_percentages: String.trim(strain_percentages),
           moods: moods,
           symptoms: symptoms,

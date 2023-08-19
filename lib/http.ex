@@ -6,6 +6,7 @@ defmodule Allbud.Http do
 
   @primary_url "https://www.allbud.com"
   @search_url "/marijuana-strains/search?sort=alphabet&letter="
+  @image_url "https://media.allbud.com/media/feature/strain/"
 
   plug(Tesla.Middleware.BaseUrl, @primary_url)
 
