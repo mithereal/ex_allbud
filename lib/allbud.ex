@@ -108,19 +108,19 @@ defmodule Allbud do
         strain_percentages =
           case Floki.find(result, "span.strain-percentages") do
             [{_, _, [strain_percentages]}] -> strain_percentages
-            _ -> ""
+            _ -> "unknown"
           end
 
         thc =
           case Floki.find(result, "h4.percentage") do
             [{_, _, [thc]}] ->
-              {thc, "0%"}
+              {thc, "unknown"}
 
             [
               {"h4", [{"class", "percentage"}],
                [{"span", [{"class", "heading"}], ["THC: "]}, thc]}
             ] ->
-              {thc, "0%"}
+              {thc, "unknown"}
 
             [
               {"h4", [{"class", "percentage"}],
@@ -135,7 +135,7 @@ defmodule Allbud do
               {thc, cbn <> pct}
 
             _ ->
-              {"0%", "0%"}
+              {"unknown", "unknown"}
           end
 
         [{_, _, [variety]}] =
